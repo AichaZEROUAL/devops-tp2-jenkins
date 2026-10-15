@@ -35,5 +35,11 @@ pipeline {
                 }
             }
         }
+         stage('Deploy image') {
+            steps {
+                bat(script: 'docker rm -f tp2-web', returnStatus: true)
+                bat "docker run -d --name tp2-web -p 8081:80 ${registry}:${BUILD_NUMBER}"
+            }
+        }
     }
 }
